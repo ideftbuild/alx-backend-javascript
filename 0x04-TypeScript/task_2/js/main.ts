@@ -44,5 +44,13 @@ function executeWork(employee: Director | Teacher): string {
   return employee.workTeacherTasks();
 }
 
+type Subjects = 'Math' | 'History';
+
+function teachClass(todayClass: Subjects): string {
+  return `Teaching ${todayClass}`;
+}
+
 // usage
 console.log(executeWork(createEmployee(600)));
+
+console.log(teachClass('History'));
