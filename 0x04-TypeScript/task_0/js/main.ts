@@ -28,7 +28,7 @@ const student2: Student = {
 const studentsList: Student[] = [student1, student2];
 
 // Step 4: Render a table with student data
-const renderTable = (students: Student[]): void => {
+export const renderTable = (students: Student[]): void => {
   const table: HTMLTableElement = document.createElement('table');
   table.style.width = '100%';
   table.setAttribute('border', '1');

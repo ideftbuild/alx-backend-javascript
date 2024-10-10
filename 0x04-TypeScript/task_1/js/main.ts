@@ -15,22 +15,22 @@ interface printTeacherFunction {
   (firstName: string, lastName: string): string;
 }
 
-const printTeacher: printTeacherFunction = (firstName, lastName) => `${firstName.charAt(0)}. ${lastName}`;
+export const printTeacher: printTeacherFunction = (firstName, lastName) => `${firstName.charAt(0)}. ${lastName}`;
 // usage example
 console.log(printTeacher('John', 'Doe'));
 
-interface Student {
+export interface Student {
   firstName: string;
   lastName: string;
   workOnHomework(): string;
   displayName(): string;
 }
 
-interface StudentConstructor {
+export interface StudentConstructor {
   new (firstName: string, lastName: string): Student;
 }
 
-class StudentClass implements Student {
+export class StudentClass implements Student {
   firstName: string;
 
   lastName: string;
