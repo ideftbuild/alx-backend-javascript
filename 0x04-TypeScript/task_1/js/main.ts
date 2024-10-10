@@ -4,7 +4,7 @@ interface Teacher {
   fullTimeEmployee: boolean;
   yearsOfExperience?: number;
   location: string;
-  [propName: string]: boolean | string | number;
+  [propName: string]: any;
 }
 
 interface Directors extends Teacher {
