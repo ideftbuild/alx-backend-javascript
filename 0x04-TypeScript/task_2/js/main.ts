@@ -34,7 +34,7 @@ export function createEmployee(salary: number | string): Director | Teacher {
 }
 
 export function isDirector(employee: Director | Teacher): employee is Director {
-  return employee instanceof Director;
+  return employee.workDirectorTasks !== undefined;
 }
 
 export function executeWork(employee: Director | Teacher): string {
