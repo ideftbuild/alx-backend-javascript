@@ -1,11 +1,9 @@
 #!/usr/bin/node
 const http = require('http');
-const countStudents = require('./3-read_file_async');
-const fs = require("fs");
+const fs = require('fs');
 
-
-const app = http.createServer(async (req, res) =>  {
- const url = req.url;
+const app = http.createServer(async (req, res) => {
+  const { url } = req;
 
   if (url === '/') {
     res.end('Hello Holberton School!');
@@ -15,7 +13,7 @@ const app = http.createServer(async (req, res) =>  {
     const result = {};
     fs.readFile(process.argv[2], 'utf8', (error, data) => {
       if (error) {
-        return reject(new Error('Cannot load the database'));
+        throw new Error('Cannot load the database');
       }
       const dataList = data.trim().split('\n').slice(1);
       // Process each line
@@ -36,7 +34,6 @@ const app = http.createServer(async (req, res) =>  {
       res.end(output.trim('\n'));
     });
   }
-
 });
 
 app.listen(1245);
