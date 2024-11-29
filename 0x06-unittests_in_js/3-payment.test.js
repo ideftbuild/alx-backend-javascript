@@ -27,7 +27,7 @@ describe('sendPaymentRequestToApi', function () {
   it('Verify the console.log output', function () {
     const spy = sinon.spy(console, 'log');
     sendPaymentRequestToApi(totalAmount, totalShipping);
-    sinon.assert.calledWith(spy, 'The total is:', 120);
+    sinon.assert.calledWith(spy, 'The total is: 120');
     spy.restore();
   });
 });
