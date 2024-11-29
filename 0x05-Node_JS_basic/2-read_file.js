@@ -12,15 +12,15 @@ module.exports = function countStudents(path) {
   // Process each line
   data.forEach((line) => {
     const fields = line.trim().split(',');
-    const [name, , , field] = fields;
+    const [firstName, , , field] = fields;
     if (!result[field]) {
       result[field] = [];
     }
-    result[field].push(name);
+    result[field].push(firstName);
   });
 
   // Output result
-  console.log('Number of students:', data.length);
+  console.log('Number of students: ' + data.length);
   Object.entries(result).forEach(([field, list]) => {
     console.log(`Number of students in ${field}: ${list.length}. List: ${list.join(', ')}`);
   });
