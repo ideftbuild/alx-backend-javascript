@@ -2,6 +2,34 @@
 const http = require('http');
 const fs = require('fs');
 
+function countStudents(path) {
+  return new Promise((resolve, reject) => {
+    const result = {};
+    fs.readFile(path, 'utf8', (error, data) => {
+      let output = '';
+      if (error) {
+        return reject(new Error('Cannot load the database'));
+      }
+      const dataList = data.trim().split('\n').slice(1);
+      // Process each line
+      dataList.forEach((line) => {
+        const fields = line.trim().split(',');
+        const [firstName, , , field] = fields;
+        if (!result[field]) {
+          result[field] = [];
+        }
+        result[field].push(firstName);
+      });
+      // Output result
+      output += `Number of students: ${dataList.length}\n`;
+      Object.entries(result).forEach(([field, list]) => {
+        output += `Number of students in ${field}: ${list.length}. List: ${list.join(', ')}\n`;
+      });
+      return resolve(output.trim());
+    });
+  });
+}
+
 const app = http.createServer((req, res) => {
   const { url } = req;
   res.statusCode = 200;
@@ -10,38 +38,11 @@ const app = http.createServer((req, res) => {
   if (url === '/') {
     res.end('Hello Holberton School!'); // response body
   } else if (url === '/students') {
-    const result = {};
-    let output = 'This is the list of our students';
     const db = process.argv[2];
-    // get data from database if passed
-    if (!db) {
-      res.statusCode = 500;
-      res.end('Cannot load the database');
-    } else {
-      fs.readFile(db, 'utf8', (error, data) => {
-        if (error) {
-          res.statusCode = 500;
-          res.end('Cannot load the database');
-          return;
-        }
-        const dataList = data.trim().split('\n').slice(1);
-        // Process each line
-        dataList.forEach((line) => {
-          const fields = line.trim().split(',');
-          const [firstName, , , field] = fields;
-          if (!result[field]) {
-            result[field] = [];
-          }
-          result[field].push(firstName);
-        });
-        // Store result
-        output += `\nNumber of students: ${dataList.length}`;
-        Object.entries(result).forEach(([field, list]) => {
-          output += `\nNumber of students in ${field}: ${list.length}. List: ${list.join(', ')}`;
-        });
-        res.end(output); // response body
-      });
-    }
+    res.write('This is the list of our students\n');
+    countStudents(db)
+      .then((data) => res.end(data))
+      .catch((error) => res.end(error.message));
   }
 });
 
